@@ -8,6 +8,7 @@ import java.util.Scanner;
 import fr.diginamic.recensement.entites.Recensement;
 import fr.diginamic.recensement.entites.Ville;
 import fr.diginamic.recensement.services.comparators.EnsemblePopComparateur;
+import fr.diginamic.recensement.services.exceptions.CodeException;
 
 /**
  * Cas d'utilisation: affichage des N villes les plus peuplées d'une région
@@ -19,10 +20,14 @@ import fr.diginamic.recensement.services.comparators.EnsemblePopComparateur;
 public class RechercheVillesPlusPeupleesRegion extends MenuService {
 
 	@Override
-	public void traiter(Recensement recensement, Scanner scanner) {
+	public void traiter(Recensement recensement, Scanner scanner) throws CodeException{
 
 		System.out.println("Veuillez saisir un nom de région:");
 		String nomRegion = scanner.nextLine();
+
+		if(nomRegion.matches("\\d+")){
+			throw new CodeException("Vous ne pouvais pas rentré de nombre dans le nom de la ville recherchée ! ");
+		}
 
 		System.out.println("Veuillez saisir un nombre de villes:");
 		String nbVillesStr = scanner.nextLine();

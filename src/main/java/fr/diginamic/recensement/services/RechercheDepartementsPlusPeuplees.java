@@ -11,6 +11,7 @@ import fr.diginamic.recensement.entites.Departement;
 import fr.diginamic.recensement.entites.Recensement;
 import fr.diginamic.recensement.entites.Ville;
 import fr.diginamic.recensement.services.comparators.EnsemblePopComparateur;
+import fr.diginamic.recensement.services.exceptions.CodeException;
 
 /**
  * Affichage des N départements les plus peuplés
@@ -21,7 +22,7 @@ import fr.diginamic.recensement.services.comparators.EnsemblePopComparateur;
 public class RechercheDepartementsPlusPeuplees extends MenuService {
 
 	@Override
-	public void traiter(Recensement recensement, Scanner scanner) {
+	public void traiter(Recensement recensement, Scanner scanner) throws CodeException {
 
 		System.out.println("Veuillez saisir un nombre de départements:");
 		String nbDeptsStr = scanner.nextLine();
@@ -36,6 +37,9 @@ public class RechercheDepartementsPlusPeuplees extends MenuService {
 			if (departement == null) {
 				departement = new Departement(ville.getCodeDepartement());
 				mapDepts.put(ville.getCodeDepartement(), departement);
+			}
+			else{
+				throw new CodeException("La ville selectionner n'a pas de code de département ! ");
 			}
 			departement.addVille(ville);
 		}
